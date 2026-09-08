@@ -70,13 +70,6 @@ namespace Csharp_Doolhof
                 int Row = 0;
                 while ((line = sr.ReadLine()) != null)
                 {
-                    /*
-                     * Wat hier foutgaat:
-                     * het gaat index 0, oftewel de eerste, en dat kan
-                     * dan komt het uitendelijk bij index 6 (bijvoorbeeld), dus de zevende, van de 6 elementen
-                     * dat klopt niet
-                     * dus error
-                     */
                     for (int Column = 0; Column <= ColumnCount; Column++)
                     {
                         Console.Write($"{line[Column]}");
