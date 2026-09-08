@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Csharp_Doolhof
 {
@@ -39,6 +37,8 @@ namespace Csharp_Doolhof
                 Console.WriteLine("Input klopt niet, probeer het opnieuw.");
             }
             string ChosenFile = Files.ElementAt(index);
+            ValidateFile MazeGame = new();
+            MazeGame.IsValidFile(ChosenFile);
         }
     }
 }
