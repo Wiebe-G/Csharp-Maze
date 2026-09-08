@@ -39,6 +39,8 @@ namespace Csharp_Doolhof
                 Console.WriteLine("Input klopt niet, probeer het opnieuw.");
             }
             string ChosenFile = Files.ElementAt(index);
+            Game MazeGame = new Game();
+            MazeGame.Maze(ChosenFile);
         }
     }
 }
