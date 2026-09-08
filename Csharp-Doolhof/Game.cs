@@ -58,12 +58,16 @@ namespace Csharp_Doolhof
         {
             int ColumnCount = File.ReadLines(FilePath).FirstOrDefault().Length;
             int RowCount = File.ReadAllLines(FilePath).Length;
-            Console.WriteLine($"Array moet {ColumnCount} breed en {RowCount} hoog zijn");
-            char[,] Maze = new char[ColumnCount, RowCount];
+
+            Console.WriteLine($"Array moet {ColumnCount} kolommen breed zijn en {RowCount} regels hoog zijn");
+            ColumnCount--;
+            RowCount--;
+
+            char[,] Maze = new char[RowCount, ColumnCount];
             using (StreamReader sr = new(FilePath))
             {
                 string line;
-                int Column = 0;
+                int Row = 0;
                 while ((line = sr.ReadLine()) != null)
                 {
                     /*
@@ -73,11 +77,12 @@ namespace Csharp_Doolhof
                      * dat klopt niet
                      * dus error
                      */
-                    for (int Row = 0; Row <= line.Length; Row++)
+                    for (int Column = 0; Column <= ColumnCount; Column++)
                     {
-                        Console.WriteLine($"Kolom: {Column}. Rij: {Row}. Karakter: {line[Row]}");
+                        Console.Write($"{line[Column]}");
                     }
-                    Column++;
+                    Row++;
+                    Console.Write('\n');
                 }
             }
         }
