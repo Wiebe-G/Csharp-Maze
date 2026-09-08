@@ -1,58 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Csharp_Doolhof
 {
     internal class Game
     {
-        internal void Maze(string FilePath)
-        {
-            if (!IsValidFile(FilePath))
-            {
-                Console.WriteLine("Bestand is ongeldig. Unlocko, probeer het opnieuw.");
-                Environment.Exit(67);
-            }
-        }
-
-        internal bool IsValidFile(string FilePath)
-        {
-            char[] AllowedChars = ['#', '.', 'E', 'e', 'S', 's', 'K', 'k', 'D', 'd'];
-            using (StreamReader sr = new(FilePath))
-            {
-                string line;
-                int Column = 0;
-                while ((line = sr.ReadLine()) != null)
-                {
-                    for (int Row = 0; Row < line.Length; Row++)
-                    {
-                        Console.Write($"{Column}-{Row}: ");
-                        Console.WriteLine(line[Row]);
-                        if (!AllowedChars.Contains(line[Row]))
-                        {
-                            EndLoopDueToIllegalCharAtColumnRow(Column, Row);
-                        }
-                    }
-                    Column++;
-                }
-                Console.WriteLine("Bestand is goedgekeurd!. Verder met laden...");
-                //Thread.Sleep(3000);
-                Console.Clear();
-
-                LoadMaze(FilePath);
-            }
-            return true;
-        }
-
-        internal void EndLoopDueToIllegalCharAtColumnRow(int Column, int Row)
-        {
-            Console.WriteLine($"Illegaal karakter gevonden op {Column}-{Row}. Verwijder dat karakter.");
-            Environment.Exit(1);
-        }
 
         internal void LoadMaze(string FilePath)
         {
@@ -72,12 +25,14 @@ namespace Csharp_Doolhof
                 {
                     for (int Column = 0; Column <= ColumnCount; Column++)
                     {
-                        Console.Write($"{line[Column]}");
+                        Maze[Row, Column] = line[Row];
+                        Console.WriteLine($"Maze op {Column} {Row} is nu {line[Row]}");
                     }
                     Row++;
-                    Console.Write('\n');
                 }
             }
+
+            Console.WriteLine("MI BOMBO");
         }
     }
 }
