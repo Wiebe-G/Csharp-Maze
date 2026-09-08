@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Csharp_Doolhof
@@ -20,7 +21,6 @@ namespace Csharp_Doolhof
 
         internal bool IsValidFile(string FilePath)
         {
-            //char[,] Maze = new char[,];
             char[] AllowedChars = ['#', '.', 'E', 'e', 'S', 's', 'K', 'k', 'D', 'd'];
             using (StreamReader sr = new(FilePath))
             {
@@ -30,18 +30,20 @@ namespace Csharp_Doolhof
                 {
                     for (int Row = 0; Row < line.Length; Row++)
                     {
-                        Console.Write($"Array {Column}-{Row}: ");
-                        //Maze[Column, Row] = line[Column][Row];
+                        Console.Write($"{Column}-{Row}: ");
                         Console.WriteLine(line[Row]);
                         if (!AllowedChars.Contains(line[Row]))
                         {
                             EndLoopDueToIllegalCharAtColumnRow(Column, Row);
                         }
-
                     }
-                    Console.WriteLine("Nieuwe rij");
                     Column++;
                 }
+                Console.WriteLine("Bestand is goedgekeurd!. Verder met laden...");
+                //Thread.Sleep(3000);
+                Console.Clear();
+
+                LoadMaze(FilePath);
             }
             return true;
         }
@@ -50,6 +52,34 @@ namespace Csharp_Doolhof
         {
             Console.WriteLine($"Illegaal karakter gevonden op {Column}-{Row}. Verwijder dat karakter.");
             Environment.Exit(1);
+        }
+
+        internal void LoadMaze(string FilePath)
+        {
+            int ColumnCount = File.ReadLines(FilePath).FirstOrDefault().Length;
+            int RowCount = File.ReadAllLines(FilePath).Length;
+            Console.WriteLine($"Array moet {ColumnCount} breed en {RowCount} hoog zijn");
+            char[,] Maze = new char[ColumnCount, RowCount];
+            using (StreamReader sr = new(FilePath))
+            {
+                string line;
+                int Column = 0;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    /*
+                     * Wat hier foutgaat:
+                     * het gaat index 0, oftewel de eerste, en dat kan
+                     * dan komt het uitendelijk bij index 6 (bijvoorbeeld), dus de zevende, van de 6 elementen
+                     * dat klopt niet
+                     * dus error
+                     */
+                    for (int Row = 0; Row <= line.Length; Row++)
+                    {
+                        Console.WriteLine($"Kolom: {Column}. Rij: {Row}. Karakter: {line[Row]}");
+                    }
+                    Column++;
+                }
+            }
         }
     }
 }
