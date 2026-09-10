@@ -20,8 +20,6 @@ namespace Csharp_Doolhof
                 {
                     for (int Row = 0; Row < line.Length; Row++)
                     {
-                        Console.Write($"{Column}-{Row}: ");
-                        Console.WriteLine(line[Row]);
                         if (!AllowedChars.Contains(line[Row]))
                         {
                             EndLoopDueToIllegalCharAtColumnRow(Column, Row);
