@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace Csharp_Doolhof
 {
@@ -27,8 +27,8 @@ namespace Csharp_Doolhof
                     }
                     Column++;
                 }
-                Console.WriteLine("Bestand is goedgekeurd!. Verder met laden...");
-                //Thread.Sleep(3000);
+                Console.WriteLine("Bestand is goedgekeurd! Verder met laden...");
+                Thread.Sleep(3000);
                 Console.Clear();
 
                 Game g = new();
