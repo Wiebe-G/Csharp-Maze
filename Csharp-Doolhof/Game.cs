@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
+using System.Runtime;
 
 namespace Csharp_Doolhof
 {
@@ -30,54 +29,143 @@ namespace Csharp_Doolhof
             }
 
             Console.WriteLine("Bestand correct ingeladen");
-            RenderMaze(Maze);
+            Position Pos = new();
+            RenderMaze(Maze, Pos);
         }
 
-        internal void RenderMaze(char[,] Maze)
+        internal void RenderMaze(char[,] Maze, Position Pos)
         {
-            Position Pos = new();
+
             for (int Row = 0; Row < Maze.GetLength(0); Row++)
             {
                 for (int Column = 0; Column < Maze.GetLength(1); Column++)
                 {
-                    Console.Write(Maze[Row, Column]);
-                    switch (Maze[Row, Column])
+                    if (Maze[Row, Column] != Maze[Pos.PlayerRow, Pos.PlayerColumn])
                     {
-                        case 'S':
-                            Pos.StartRow = Row;
-                            Pos.StartColumn = Column;
-                            break;
-                        case 'K':
-                            Pos.KeyRow = Row;
-                            Pos.KeyColumn = Column;
-                            break;
-                        case 'D':
-                            Pos.DoorRow = Row;
-                            Pos.DoorColumn = Column;
-                            break;
-                        case 'E':
-                            Pos.ExitRow = Row;
-                            Pos.ExitColumn = Column;
-                            break;
+                        Console.BackgroundColor = ConsoleColor.Blue;
+                        Console.Write(Maze[Row, Column]);
+                        Console.ResetColor();
                     }
+                    else
+                    {
+                        Console.Write(Maze[Row, Column]);
+                    }
+
                 }
                 Console.WriteLine("\n");
             }
-
-            char Movement = Console.ReadKey().KeyChar;
-
-            ProcessMovement(Maze, Pos, Movement);
+            ProcessMovement(Maze, Pos);
         }
 
-        internal void ProcessMovement(char[,] Maze, Position player, char Movement)
+        internal void ProcessMovement(char[,] Maze, Position Pos)
         {
-            Console.WriteLine($"Speler moet van {player.StartColumn}-{player.StartRow} eerst naar de key op {player.KeyColumn}-{player.KeyRow}," +
-                $"om daarna naar de deur bij {player.DoorColumn}-{player.DoorRow} te komen, en dan naar de exit bij {player.ExitColumn}-{player.ExitRow} te gaan");
+
+            while (true)
+            {
+                if (Console.KeyAvailable)
+                {
+                    Console.WriteLine($"{Pos.PlayerRow}-{Pos.PlayerColumn}");
+
+                    string Movement = Console.ReadKey(true).Key.ToString();
+                    bool IsValid = IsValidPosition(Maze, Pos, Movement);
+
+                    if (!IsValid)
+                    {
+                        continue;
+                    }
+                }
+            }
         }
 
-        internal bool IsValidPosition(char[,] Maze, Position position)
+        internal bool IsValidPosition(char[,] Maze, Position Pos, string Movement)
         {
-            return false;
+            try
+            {
+                switch (Movement)
+                {
+                    case "W":
+                        (bool FlowControlUp, bool value) = MoveUpwards(Maze, Pos);
+                        if (!FlowControlUp)
+                        {
+                            return value;
+                        }
+                        break;
+                    case "A":
+                        (bool FlowControlLeft, bool valueLeft) = MoveLeft(Maze, Pos);
+                        if (!FlowControlLeft)
+                        {
+                            return valueLeft;
+                        }
+                        break;
+                    case "S":
+                        (bool FlowControlDown, bool valueDown) = MoveDown(Maze, Pos);
+                        if (!FlowControlDown)
+                        {
+                            return valueDown;
+                        }
+                        break;
+                    case "D":
+                        (bool FlowControlRight, bool valueRight) = MoveRight(Maze, Pos);
+                        if (!FlowControlRight)
+                        {
+                            return valueRight;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+                Console.WriteLine($"Beweging input ontvangen: {Movement}");
+                return true;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return false;
+            }
+        }
+
+        private static (bool flowControl, bool value) MoveRight(char[,] Maze, Position Pos)
+        {
+            if (Maze[Pos.PlayerRow, Pos.PlayerRow + 1].Equals('#'))
+            {
+                Console.WriteLine("Je probeert tegen een muur te lopen.");
+                return (flowControl: false, value: false);
+            }
+            Pos.PlayerColumn++;
+            return (flowControl: true, value: default);
+        }
+
+        private static (bool flowControl, bool value) MoveDown(char[,] Maze, Position Pos)
+        {
+            if (Maze[Pos.PlayerRow - 1, Pos.PlayerColumn].Equals('#'))
+            {
+                Console.WriteLine("Je probeert tegen een muur te lopen.");
+                return (flowControl: false, value: false);
+            }
+            Pos.PlayerRow--;
+            return (flowControl: true, value: default);
+        }
+
+        private static (bool flowControl, bool value) MoveLeft(char[,] Maze, Position Pos)
+        {
+            if (Maze[Pos.PlayerRow, Pos.PlayerColumn - 1].Equals('#'))
+            {
+                Console.WriteLine("Je probeert tegen een muur te lopen.");
+                return (flowControl: false, value: false);
+            }
+            Pos.PlayerColumn--;
+            return (flowControl: true, value: default);
+        }
+
+        private static (bool flowControl, bool value) MoveUpwards(char[,] Maze, Position Pos)
+        {
+            if (Maze[Pos.PlayerRow + 1, Pos.PlayerColumn].Equals('#'))
+            {
+                Console.WriteLine("Je probeert tegen een muur te lopen.");
+                return (flowControl: false, value: false);
+            }
+            Pos.PlayerRow++;
+            return (flowControl: true, value: default);
         }
     }
 }

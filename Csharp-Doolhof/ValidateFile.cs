@@ -28,7 +28,7 @@ namespace Csharp_Doolhof
                     Column++;
                 }
                 Console.WriteLine("Bestand is goedgekeurd! Verder met laden...");
-                Thread.Sleep(3000);
+                //Thread.Sleep(3000);
                 Console.Clear();
 
                 Game g = new();

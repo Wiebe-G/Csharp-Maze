@@ -10,7 +10,8 @@ namespace Csharp_Doolhof
     {
         internal int StartRow { get; set; }
         internal int StartColumn { get; set; }
-
+        internal int PlayerRow { get; set; }
+        internal int PlayerColumn { get; set; }
         internal int KeyRow { get; set; }
         internal int KeyColumn { get; set; }
         internal int DoorRow { get; set; }

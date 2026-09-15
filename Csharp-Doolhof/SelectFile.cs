@@ -23,15 +23,13 @@ namespace Csharp_Doolhof
             }
             Console.WriteLine("Welk bestand wilt u gebruiken?");
 
-            bool IsValidInput = false;
             bool Input;
-            while (!IsValidInput)
+            while (!false)
             {
                 Input = int.TryParse(Console.ReadLine(), out index);
                 if (Input)
                 {
                     Console.WriteLine($"Bestand {Files.ElementAt(index)} gekozen, laden...");
-                    IsValidInput = true;
                     break;
                 }
                 Console.WriteLine("Input klopt niet, probeer het opnieuw.");
