@@ -46,20 +46,22 @@ namespace Csharp_Doolhof
                 for (int Column = 0; Column < Maze.GetLength(1); Column++)
                 {
                     char CurrentChar = Maze[Row, Column];
-                    if (Maze[Row, Column] == Maze[Pos.PlayerX, Pos.PlayerY])
+                    if (Row == Pos.PlayerX && Column == Pos.PlayerY && CurrentChar != '#')
                     {
-                        Console.BackgroundColor = ConsoleColor.Green;
-                        Console.Write(CurrentChar);
+                        Console.ResetColor();
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(',');
                         Console.ResetColor();
                     }
                     else
                     {
+                        Console.ResetColor();
                         Console.Write(CurrentChar);
+                        Console.ResetColor();
                     }
 
                 }
                 Console.WriteLine("\n");
-
             }
             Console.ResetColor();
             ProcessMovement(Maze);
@@ -72,7 +74,7 @@ namespace Csharp_Doolhof
                 if (Console.KeyAvailable)
                 {
                     string Movement = Console.ReadKey(true).Key.ToString();
-                    bool IsValid = IsValidPositionAndMovePlayer(Maze, Movement);
+                    bool IsValid = IsMovementValid(Maze, Movement);
 
                     if (!IsValid)
                     {
@@ -106,42 +108,14 @@ namespace Csharp_Doolhof
             }
         }
 
-        internal bool IsValidPositionAndMovePlayer(char[,] Maze, string Movement)
+        internal bool IsMovementValid(char[,] Maze, string Movement)
         {
             try
             {
-                switch (Movement)
+                bool DoMovementOrSomething = HandleMovement(Maze, Pos, Movement);
+                if (!DoMovementOrSomething)
                 {
-                    case "W":
-                        (bool FlowControlUp, bool value) = MoveUpwards(Maze, Pos);
-                        if (!FlowControlUp)
-                        {
-                            return value;
-                        }
-                        break;
-                    case "A":
-                        (bool FlowControlLeft, bool valueLeft) = MoveLeft(Maze, Pos);
-                        if (!FlowControlLeft)
-                        {
-                            return valueLeft;
-                        }
-                        break;
-                    case "S":
-                        (bool FlowControlDown, bool valueDown) = MoveDown(Maze, Pos);
-                        if (!FlowControlDown)
-                        {
-                            return valueDown;
-                        }
-                        break;
-                    case "D":
-                        (bool FlowControlRight, bool valueRight) = MoveRight(Maze, Pos);
-                        if (!FlowControlRight)
-                        {
-                            return valueRight;
-                        }
-                        break;
-                    default:
-                        break;
+                    return false;
                 }
                 return true;
             }
