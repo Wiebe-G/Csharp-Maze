@@ -41,14 +41,12 @@ namespace Csharp_Doolhof
 
         internal void RenderMaze(char[,] Maze)
         {
-            Console.WriteLine($"{Pos.PlayerY} - {Pos.PlayerX}");
             for (int Row = 0; Row < Maze.GetLength(0); Row++)
             {
                 for (int Column = 0; Column < Maze.GetLength(1); Column++)
                 {
-
                     char CurrentChar = Maze[Row, Column];
-                    if (Maze[Row, Column] == Maze[Pos.PlayerY, Pos.PlayerX])
+                    if (Maze[Row, Column] == Maze[Pos.PlayerX, Pos.PlayerY])
                     {
                         Console.BackgroundColor = ConsoleColor.Green;
                         Console.Write(CurrentChar);
@@ -73,20 +71,42 @@ namespace Csharp_Doolhof
             {
                 if (Console.KeyAvailable)
                 {
-                    Console.WriteLine($"Rij is {Pos.PlayerY} en kolom is {Pos.PlayerX}");
-
                     string Movement = Console.ReadKey(true).Key.ToString();
-                    bool IsValid = IsValidPosition(Maze, Movement);
+                    bool IsValid = IsValidPositionAndMovePlayer(Maze, Movement);
 
                     if (!IsValid)
                     {
                         continue;
                     }
+
+                    if (Maze[Pos.PlayerX, Pos.PlayerY].Equals('K'))
+                    {
+                        Pos.HasKey = true;
+                    }
+
+                    if (Maze[Pos.PlayerX, Pos.PlayerY].Equals('D') && !Pos.HasKey)
+                    {
+                        continue;
+                    }
+
+                    if (Maze[Pos.PlayerX, Pos.PlayerY].Equals('D') && Pos.HasKey)
+                    {
+                        Maze[Pos.PlayerX, Pos.PlayerY] = '.';
+                    }
+
+                    if (Maze[Pos.PlayerX, Pos.PlayerY].Equals('E'))
+                    {
+                        Console.WriteLine("YOU WIN!!!!! YIPPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!");
+                        break;
+                    }
+
+                    Console.Clear();
+                    RenderMaze(Maze);
                 }
             }
         }
 
-        internal bool IsValidPosition(char[,] Maze, string Movement)
+        internal bool IsValidPositionAndMovePlayer(char[,] Maze, string Movement)
         {
             try
             {
@@ -123,8 +143,6 @@ namespace Csharp_Doolhof
                     default:
                         break;
                 }
-                Console.Clear();
-                RenderMaze(Maze);
                 return true;
             }
             catch (IndexOutOfRangeException)
