@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace Csharp_Doolhof
 {
@@ -20,8 +20,6 @@ namespace Csharp_Doolhof
                 {
                     for (int Row = 0; Row < line.Length; Row++)
                     {
-                        Console.Write($"{Column}-{Row}: ");
-                        Console.WriteLine(line[Row]);
                         if (!AllowedChars.Contains(line[Row]))
                         {
                             EndLoopDueToIllegalCharAtColumnRow(Column, Row);
@@ -29,7 +27,7 @@ namespace Csharp_Doolhof
                     }
                     Column++;
                 }
-                Console.WriteLine("Bestand is goedgekeurd!. Verder met laden...");
+                Console.WriteLine("Bestand is goedgekeurd! Verder met laden...");
                 //Thread.Sleep(3000);
                 Console.Clear();
 
