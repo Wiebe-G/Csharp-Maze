@@ -12,16 +12,16 @@ namespace Csharp_Doolhof
             switch (Movement)
             {
                 case "W":
-                    Pos.PlayerY--;
-                    break;
-                case "A":
                     Pos.PlayerX--;
                     break;
+                case "A":
+                    Pos.PlayerY--;
+                    break;
                 case "S":
-                    Pos.PlayerY++;
+                    Pos.PlayerX++;
                     break;
                 case "D":
-                    Pos.PlayerX++;
+                    Pos.PlayerY++;
                     break;
             }
 
@@ -40,8 +40,8 @@ namespace Csharp_Doolhof
                 Maze[Pos.PlayerX, Pos.PlayerY].Equals('D') && !Pos.HasKey ||
                 Pos.PlayerY < 0 ||
                 Pos.PlayerX < 0 ||
-                Pos.PlayerY > Maze.GetLength(0) ||
-                Pos.PlayerX > Maze.GetLength(1))
+                Pos.PlayerY > Maze.GetLength(1) ||
+                Pos.PlayerX > Maze.GetLength(0))
             {
                 Console.WriteLine($"Je staat op {Pos.PlayerX} - {Pos.PlayerY}, maar je mag niet verder. Ik zet je nu terug naar {OldPlayerX}-{OldPlayerY}");
                 Pos.PlayerX = OldPlayerX;
