@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            SelectFile f = new SelectFile();
+            SelectFile f = new();
             f.UserInputForFileSelect();
         }
     }

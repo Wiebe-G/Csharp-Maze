@@ -51,6 +51,7 @@ namespace Csharp_Doolhof
                 Console.WriteLine("\n");
             }
             Console.ResetColor();
+            Console.WriteLine("Beweeg met W,A,S,D, en ga terug naar het menu met P");
             ProcessMovement(Maze);
         }
 

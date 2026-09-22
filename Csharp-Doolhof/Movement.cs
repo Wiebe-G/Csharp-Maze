@@ -23,6 +23,13 @@ namespace Csharp_Doolhof
                 case "D":
                     Pos.PlayerY++;
                     break;
+                case "P":
+                    Console.Clear();
+                    SelectFile s = new();
+                    s.UserInputForFileSelect();
+                    break;
+                default:
+                    break;
             }
 
             bool IsMoveValid = CheckCollision(Maze, Pos);
