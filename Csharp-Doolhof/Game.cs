@@ -45,30 +45,47 @@ namespace Csharp_Doolhof
             {
                 for (int Column = 0; Column < Maze.GetLength(1); Column++)
                 {
-                    char CurrentChar = Maze[Row, Column];
-                    if (Row == Pos.PlayerX && Column == Pos.PlayerY && CurrentChar != '#')
-                    {
-                        Console.ResetColor();
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write(',');
-                        Console.ResetColor();
-                    }
-                    //else if (CurrentChar.Equals('#'))
-                    //{
-                    //    Console.ForegroundColor = ConsoleColor.Red;
-                    //    Console.Write(CurrentChar);
-                    //    Console.ResetColor();
-                    //}
-                    else
-                    {
-                        Console.Write(CurrentChar);
-                    }
+                    RenderGraphicsWithRtxEnabled(Maze, Row, Column);
 
                 }
                 Console.WriteLine("\n");
             }
             Console.ResetColor();
             ProcessMovement(Maze);
+        }
+
+        private void RenderGraphicsWithRtxEnabled(char[,] Maze, int Row, int Column)
+        {
+            char CurrentChar = Maze[Row, Column];
+            if (Row == Pos.PlayerX && Column == Pos.PlayerY && CurrentChar != '#')
+            {
+                Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write('P');
+                Console.ResetColor();
+            }
+            else if (CurrentChar.Equals('.'))
+            {
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.Write(CurrentChar);
+                Console.ResetColor();
+            }
+            else if (CurrentChar.Equals('#'))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write(CurrentChar);
+                Console.ResetColor();
+            }
+            else if (CurrentChar.Equals('K'))
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write(CurrentChar);
+                Console.ResetColor();
+            }
+            else
+            {
+                Console.Write(CurrentChar);
+            }
         }
 
         internal void ProcessMovement(char[,] Maze)
