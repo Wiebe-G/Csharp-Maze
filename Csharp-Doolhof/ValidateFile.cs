@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 
 namespace Csharp_Doolhof
@@ -11,7 +9,11 @@ namespace Csharp_Doolhof
     {
         internal void IsValidFile(string FilePath)
         {
-            char[] AllowedChars = ['#', '.', 'E', 'e', 'S', 's', 'K', 'k', 'D', 'd'];
+            char[] AllowedChars = ['#', '.', 'E', 'S', 'K', 'D',];
+            bool HasStart = false;
+            bool HasKey = false;
+            bool HasDoor = false;
+            bool HasEnd = false;
             using (StreamReader sr = new(FilePath))
             {
                 string line;
@@ -20,26 +22,43 @@ namespace Csharp_Doolhof
                 {
                     for (int Row = 0; Row < line.Length; Row++)
                     {
-                        if (!AllowedChars.Contains(line[Row]))
+                        char CurrentChar = Char.ToUpper(line[Row]);
+                        if (!AllowedChars.Contains(CurrentChar))
                         {
-                            EndLoopDueToIllegalCharAtColumnRow(Column, Row);
+                            Console.WriteLine($"Illegaal karakter gevonden op {Column}-{Row}. Verwijder dat karakter.");
+                            Environment.Exit(1);
+                        }
+
+                        switch (CurrentChar)
+                        {
+                            case 'S':
+                                HasStart = true;
+                                break;
+                            case 'K':
+                                HasKey = true;
+                                break;
+                            case 'D':
+                                HasDoor = true;
+                                break;
+                            case 'E':
+                                HasEnd = true;
+                                break;
                         }
                     }
                     Column++;
                 }
-                Console.WriteLine("Bestand is goedgekeurd! Verder met laden...");
-                //Thread.Sleep(3000);
-                Console.Clear();
-
-                Game g = new();
-                g.LoadMaze(FilePath);
             }
-        }
+            if (!HasStart || !HasDoor || !HasKey || !HasEnd)
+            {
+                Console.WriteLine("Bestand bevat niet een start, sleutel, deur, en/of einde. Voeg deze toe en probeer opnieuw");
+                return;
+            }
+            Console.WriteLine("Bestand is goedgekeurd! Verder met laden...");
+            //Thread.Sleep(3000);
+            Console.Clear();
 
-        internal void EndLoopDueToIllegalCharAtColumnRow(int Column, int Row)
-        {
-            Console.WriteLine($"Illegaal karakter gevonden op {Column}-{Row}. Verwijder dat karakter.");
-            Environment.Exit(1);
+            Game g = new();
+            g.LoadMaze(FilePath);
         }
     }
 }

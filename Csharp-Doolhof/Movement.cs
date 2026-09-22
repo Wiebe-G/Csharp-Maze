@@ -32,8 +32,7 @@ namespace Csharp_Doolhof
                     break;
             }
 
-            bool IsMoveValid = CheckCollision(Maze, Pos);
-            if (!IsMoveValid)
+            if (!CheckCollision(Maze, Pos))
             {
                 Pos.PlayerX = OldPlayerX;
                 Pos.PlayerY = OldPlayerY;
