@@ -99,7 +99,7 @@ namespace Csharp_Doolhof
                     if (Maze[Pos.PlayerX, Pos.PlayerY].Equals('E'))
                     {
                         Console.WriteLine("YOU WIN!!!!! YIPPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!");
-                        break;
+                        Environment.Exit(0);
                     }
 
                     Console.Clear();

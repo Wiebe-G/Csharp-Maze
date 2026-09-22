@@ -28,6 +28,9 @@ namespace Csharp_Doolhof
             bool IsMoveValid = CheckCollision(OldPlayerX, OldPlayerY, Maze, Pos);
             if (!IsMoveValid)
             {
+                Console.WriteLine($"Je staat op {Pos.PlayerX} - {Pos.PlayerY}, maar je mag niet verder. Ik zet je nu terug naar {OldPlayerX}-{OldPlayerY}");
+                Pos.PlayerX = OldPlayerX;
+                Pos.PlayerY = OldPlayerY;
                 return false;
             }
             return true;
@@ -43,9 +46,6 @@ namespace Csharp_Doolhof
                 Pos.PlayerY > Maze.GetLength(1) ||
                 Pos.PlayerX > Maze.GetLength(0))
             {
-                Console.WriteLine($"Je staat op {Pos.PlayerX} - {Pos.PlayerY}, maar je mag niet verder. Ik zet je nu terug naar {OldPlayerX}-{OldPlayerY}");
-                Pos.PlayerX = OldPlayerX;
-                Pos.PlayerY = OldPlayerY;
                 return false;
             }
 
