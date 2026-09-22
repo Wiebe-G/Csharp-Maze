@@ -40,7 +40,7 @@ namespace Csharp_Doolhof
 
         internal void IsValidFile(string FilePath)
         {
-            char[] AllowedChars = ['#', '.', 'E', 'S', 'K', 'D',];
+            char[] AllowedChars = ['#', '.', 'S', 'K', 'D', 'E'];
             bool HasStart = false;
             bool HasKey = false;
             bool HasDoor = false;
@@ -75,6 +75,28 @@ namespace Csharp_Doolhof
                                 HasEnd = true;
                                 break;
                         }
+
+                        // goed idee dat niet werkt
+                        //if (CurrentChar.Equals('S') && HasStart)
+                        //{
+                        //    Console.WriteLine("Kan niet meerdere startpunten hebben");
+                        //    return;
+                        //}
+                        //if (CurrentChar.Equals('K') && HasKey)
+                        //{
+                        //    Console.WriteLine("Mag niet meerdere sleutels hebben");
+                        //    return;
+                        //}
+                        //if (CurrentChar.Equals('D') && HasDoor)
+                        //{
+                        //    Console.WriteLine("Mag niet meerdere deuren hebben");
+                        //    return;
+                        //}
+                        //if (CurrentChar.Equals('E') && HasEnd)
+                        //{
+                        //    Console.WriteLine("Mag niet meerdere exits hebben");
+                        //    return;
+                        //}
                     }
                     Column++;
                 }
