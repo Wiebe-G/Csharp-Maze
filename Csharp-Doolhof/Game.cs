@@ -53,11 +53,15 @@ namespace Csharp_Doolhof
                         Console.Write(',');
                         Console.ResetColor();
                     }
+                    //else if (CurrentChar.Equals('#'))
+                    //{
+                    //    Console.ForegroundColor = ConsoleColor.Red;
+                    //    Console.Write(CurrentChar);
+                    //    Console.ResetColor();
+                    //}
                     else
                     {
-                        Console.ResetColor();
                         Console.Write(CurrentChar);
-                        Console.ResetColor();
                     }
 
                 }
@@ -83,6 +87,7 @@ namespace Csharp_Doolhof
 
                     if (Maze[Pos.PlayerX, Pos.PlayerY].Equals('K'))
                     {
+                        Maze[Pos.PlayerX, Pos.PlayerY] = '.';
                         Pos.HasKey = true;
                     }
 
