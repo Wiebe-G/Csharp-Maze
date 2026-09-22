@@ -1,10 +1,13 @@
-﻿namespace Csharp_Doolhof
+﻿using System;
+
+namespace Csharp_Doolhof
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            SelectFile f = new();
+            Console.Title = "Beste doolhof OAT";
+            SelectAndValidateFile f = new();
             f.UserInputForFileSelect();
         }
     }

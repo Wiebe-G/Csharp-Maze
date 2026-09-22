@@ -25,7 +25,7 @@ namespace Csharp_Doolhof
                     break;
                 case "P":
                     Console.Clear();
-                    SelectFile s = new();
+                    SelectAndValidateFile s = new();
                     s.UserInputForFileSelect();
                     break;
                 default:
@@ -37,6 +37,28 @@ namespace Csharp_Doolhof
                 Pos.PlayerX = OldPlayerX;
                 Pos.PlayerY = OldPlayerY;
                 return false;
+            }
+
+            if (Maze[Pos.PlayerX, Pos.PlayerY].Equals('K'))
+            {
+                Maze[Pos.PlayerX, Pos.PlayerY] = '.';
+                Pos.HasKey = true;
+            }
+
+            if (Maze[Pos.PlayerX, Pos.PlayerY].Equals('D') && !Pos.HasKey)
+            {
+                return false;
+            }
+
+            if (Maze[Pos.PlayerX, Pos.PlayerY].Equals('D') && Pos.HasKey)
+            {
+                Maze[Pos.PlayerX, Pos.PlayerY] = '.';
+            }
+
+            if (Maze[Pos.PlayerX, Pos.PlayerY].Equals('E'))
+            {
+                Console.WriteLine("YOU WIN!!!!! YIPPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!");
+                Environment.Exit(0);
             }
             return true;
         }

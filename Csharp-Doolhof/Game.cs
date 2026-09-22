@@ -103,28 +103,6 @@ namespace Csharp_Doolhof
                         continue;
                     }
 
-                    if (Maze[Pos.PlayerX, Pos.PlayerY].Equals('K'))
-                    {
-                        Maze[Pos.PlayerX, Pos.PlayerY] = '.';
-                        Pos.HasKey = true;
-                    }
-
-                    if (Maze[Pos.PlayerX, Pos.PlayerY].Equals('D') && !Pos.HasKey)
-                    {
-                        continue;
-                    }
-
-                    if (Maze[Pos.PlayerX, Pos.PlayerY].Equals('D') && Pos.HasKey)
-                    {
-                        Maze[Pos.PlayerX, Pos.PlayerY] = '.';
-                    }
-
-                    if (Maze[Pos.PlayerX, Pos.PlayerY].Equals('E'))
-                    {
-                        Console.WriteLine("YOU WIN!!!!! YIPPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!");
-                        Environment.Exit(0);
-                    }
-
                     Console.Clear();
                     RenderMaze(Maze);
                 }
