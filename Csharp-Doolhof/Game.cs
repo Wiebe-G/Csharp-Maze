@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Runtime;
-using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace Csharp_Doolhof
@@ -28,8 +26,8 @@ namespace Csharp_Doolhof
                         Maze[Row, Column] = line[Column];
                         if (Maze[Row, Column].Equals('S'))
                         {
-                            Pos.PlayerY = Row;
-                            Pos.PlayerX = Column;
+                            Pos.PlayerX = Row;
+                            Pos.PlayerY = Column;
                         }
                     }
                     Row++;
@@ -39,18 +37,20 @@ namespace Csharp_Doolhof
             Console.WriteLine("Bestand correct ingeladen");
 
             RenderMaze(Maze);
+
+            //ProcessMovement(Maze);
         }
 
         internal void RenderMaze(char[,] Maze)
         {
+            Console.SetCursorPosition(0, 0);
             for (int Row = 0; Row < Maze.GetLength(0); Row++)
             {
                 for (int Column = 0; Column < Maze.GetLength(1); Column++)
                 {
                     RenderGraphicsWithRtxEnabled(Maze, Row, Column);
-
                 }
-                Console.WriteLine("\n");
+                Console.WriteLine();
             }
             Console.ResetColor();
             Console.WriteLine("Beweeg met W,A,S,D, en ga terug naar het menu met P");
@@ -65,30 +65,36 @@ namespace Csharp_Doolhof
                 Console.ResetColor();
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write('P');
+                //sb.Append('P');
                 Console.ResetColor();
             }
             else if (CurrentChar.Equals('.'))
             {
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.Write(CurrentChar);
+                //sb.Append(CurrentChar);
                 Console.ResetColor();
             }
             else if (CurrentChar.Equals('#'))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write(CurrentChar);
+                //sb.Append(CurrentChar);
                 Console.ResetColor();
             }
             else if (CurrentChar.Equals('K'))
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write(CurrentChar);
+                //sb.Append(CurrentChar);
                 Console.ResetColor();
             }
             else
             {
                 Console.Write(CurrentChar);
+                //sb.AppendLine(CurrentChar.ToString());
             }
+            //return sb;
         }
 
         internal void ProcessMovement(char[,] Maze)
@@ -126,7 +132,7 @@ namespace Csharp_Doolhof
                         WinScreen();
                     }
 
-                    Console.Clear();
+                    //Console.Clear();
                     RenderMaze(Maze);
                 }
             }
@@ -136,8 +142,7 @@ namespace Csharp_Doolhof
         {
             try
             {
-                bool DoMovementOrSomething = HandleMovement(Maze, Pos, Movement);
-                if (!DoMovementOrSomething)
+                if (!HandleMovement(Maze, Pos, Movement))
                 {
                     return false;
                 }
@@ -153,7 +158,7 @@ namespace Csharp_Doolhof
         {
             Console.WriteLine("YOU WIN!!!!! YIPPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE!");
             Console.WriteLine("Wilt u opnieuw spelen? [Y]es/[N]o");
-            string Choice = Console.ReadLine();
+            string Choice = Console.ReadLine().ToUpper();
             switch (Choice)
             {
                 case string when Choice.StartsWith("Y"):

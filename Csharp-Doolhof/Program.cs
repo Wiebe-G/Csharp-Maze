@@ -7,6 +7,7 @@ namespace Csharp_Doolhof
         static void Main(string[] args)
         {
             Console.Title = "Beste doolhof OAT";
+            Console.CursorVisible = false;
             SelectAndValidateFile f = new();
             f.UserInputForFileSelect();
         }
