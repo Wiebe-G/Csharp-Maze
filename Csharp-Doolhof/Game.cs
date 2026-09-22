@@ -7,7 +7,7 @@ namespace Csharp_Doolhof
 {
     internal class Game : Movement
     {
-        Position Pos = new();
+        readonly Position Pos = new();
         internal void LoadMaze(string FilePath)
         {
             int ColumnCount = File.ReadLines(FilePath).FirstOrDefault().Length;

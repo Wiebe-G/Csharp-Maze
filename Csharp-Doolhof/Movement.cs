@@ -25,7 +25,7 @@ namespace Csharp_Doolhof
                     break;
             }
 
-            bool IsMoveValid = CheckCollision(OldPlayerX, OldPlayerY, Maze, Pos);
+            bool IsMoveValid = CheckCollision(Maze, Pos);
             if (!IsMoveValid)
             {
                 Pos.PlayerX = OldPlayerX;
@@ -35,7 +35,7 @@ namespace Csharp_Doolhof
             return true;
         }
 
-        internal bool CheckCollision(int OldPlayerX, int OldPlayerY, char[,] Maze, Position Pos)
+        internal bool CheckCollision(char[,] Maze, Position Pos)
         {
             if (
                 Maze[Pos.PlayerX, Pos.PlayerY].Equals('#') ||
