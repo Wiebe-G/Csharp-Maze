@@ -37,8 +37,6 @@ namespace Csharp_Doolhof
             Console.WriteLine("Bestand correct ingeladen");
 
             RenderMaze(Maze);
-
-            //ProcessMovement(Maze);
         }
 
         internal void RenderMaze(char[,] Maze)
@@ -62,39 +60,54 @@ namespace Csharp_Doolhof
             char CurrentChar = Maze[Row, Column];
             if (Row == Pos.PlayerX && Column == Pos.PlayerY && CurrentChar != '#')
             {
-                Console.ResetColor();
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.Write('P');
-                //sb.Append('P');
                 Console.ResetColor();
             }
             else if (CurrentChar.Equals('.'))
             {
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.Write(CurrentChar);
-                //sb.Append(CurrentChar);
                 Console.ResetColor();
             }
             else if (CurrentChar.Equals('#'))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write(CurrentChar);
-                //sb.Append(CurrentChar);
                 Console.ResetColor();
             }
             else if (CurrentChar.Equals('K'))
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write(CurrentChar);
-                //sb.Append(CurrentChar);
                 Console.ResetColor();
             }
             else
             {
                 Console.Write(CurrentChar);
-                //sb.AppendLine(CurrentChar.ToString());
             }
-            //return sb;
+
+            //switch (CurrentChar)
+            //{
+            //    case '.':
+            //        Console.ForegroundColor = ConsoleColor.Blue;
+            //        Console.Write(CurrentChar);
+            //        Console.ResetColor();
+            //        break;
+            //    case '#':
+            //        Console.ForegroundColor = ConsoleColor.Red;
+            //        Console.Write(CurrentChar);
+            //        Console.ResetColor();
+            //        break;
+            //    case 'K':
+            //        Console.ForegroundColor = ConsoleColor.Yellow;
+            //        Console.Write(CurrentChar);
+            //        Console.ResetColor();
+            //        break;
+            //    default:
+            //        Console.Write(CurrentChar);
+            //        break;
+            //}
         }
 
         internal void ProcessMovement(char[,] Maze)
